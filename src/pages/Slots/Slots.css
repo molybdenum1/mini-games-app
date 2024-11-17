@@ -1,12 +1,34 @@
 .slots-page {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    column-gap: 100px;
+    height: 100vh;
+    row-gap: 20px;
+}
+.slots-page-playground {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     row-gap: 60px;
 }
 .slots-page-title {
     font-size: 2em;
     font-weight: 700;
+}
+
+.slots-page-user_balance {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+}
+.slots-page-rules {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
 }

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { Slot } from "../Slot/Slot";
 import { StartBtn } from "../StartBtn/StartBtn";
 
 import "./GameField.css";
+import { useDispatch } from "react-redux";
+import { placeBet } from "../../store/features/userSlice";
 
 const elements = ["🍒", "🍊", "🍐", "🍋", "🍉", "🍇"];
 
@@ -12,6 +14,9 @@ export const GameField = () => {
   const [slotB, setSlotB] = useState("🍒");
   const [slotC, setSlotC] = useState("🍒");
   const [isRunning, setIsRunning] = useState(false);
+  const [bet] = useState(10);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let interval: any;
@@ -28,6 +33,7 @@ export const GameField = () => {
   }, [isRunning]);
 
   const runSlots = () => {
+    dispatch(placeBet(bet));
     setIsRunning(true);
     setTimeout(() => {
       setIsRunning(false);
@@ -36,16 +42,10 @@ export const GameField = () => {
 
   return (
     <div className="game-field">
-      <div className={`game-field-slots ${isRunning ? "running" : ""}`}>
-        <div>
-          <Slot slotValue={slotA} setSlotValue={setSlotA} />
-        </div>
-        <div>
-          <Slot slotValue={slotB} setSlotValue={setSlotB} />
-        </div>
-        <div>
-          <Slot slotValue={slotC} setSlotValue={setSlotC} />
-        </div>
+      <div className="game-field-slots">
+        <Slot slotValue={slotA} isRunning={isRunning} />
+        <Slot slotValue={slotB} isRunning={isRunning} />
+        <Slot slotValue={slotC} isRunning={isRunning} />
       </div>
       <div className="game-field-arm">
         <StartBtn onClick={runSlots} />

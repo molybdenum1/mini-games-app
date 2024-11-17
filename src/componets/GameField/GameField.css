@@ -11,7 +11,3 @@
     justify-content: center;
     column-gap: 20px;
 }
-
-.game-field-slots.running .slot {
-    animation: spin 0.1s linear infinite;
-  }
