@@ -1,0 +1,12 @@
+.slots-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    row-gap: 60px;
+}
+.slots-page-title {
+    font-size: 2em;
+    font-weight: 700;
+}

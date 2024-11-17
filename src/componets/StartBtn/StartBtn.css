@@ -1,0 +1,14 @@
+.start-btn {
+    background-color: #E85D75;
+    border: none;
+    border-radius: 5px;
+    color: #F5FBEF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.5em;
+    margin-top: 20px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
