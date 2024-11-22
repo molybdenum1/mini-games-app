@@ -2,11 +2,20 @@
     display: flex;
     flex-direction: row;
     column-gap: 40px;
+    margin: 20px;
 }
 
 .game-field-slots {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20px;
+}
+
+.game-field-arm {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     column-gap: 20px;

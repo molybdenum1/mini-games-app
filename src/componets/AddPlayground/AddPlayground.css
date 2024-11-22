@@ -1,0 +1,7 @@
+.add-playground {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px dashed #F5FBEF;
+    border-radius: 10px;
+}
