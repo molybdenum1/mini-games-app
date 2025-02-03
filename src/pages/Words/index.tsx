@@ -1,69 +1,70 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import "./Words.css";
 
 export const Words = () => {
+  const wordsHistoryDefaultLength = 7;
+
   const [word] = useState<string>("hello");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const [guessWord, setGuessWord] = useState<string[]>([]);
 
-  const [wordsHistory] = useState<string[]>([
-    "hello",
-    "world",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ]);
+  const [wordsHistory, setWordsHistory] = useState<string[]>([]);
+  const inputsRefs = useRef<HTMLInputElement[]>([]);
 
   const autoFocusChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
-    if (e.target.value.length === 1 && index !== word.length - 1) {
-      const nextInput = document.querySelectorAll("input")[
-        index + 1
-      ] as HTMLInputElement;
-      nextInput.focus();
+    const newGuessWord = [...guessWord];
+    newGuessWord[index] = e.target.value;
+    setGuessWord(newGuessWord);
+
+    if (e.target.value && index < word.length - 1) {
+      inputsRefs.current[index + 1]?.focus();
     }
-    guessWord[index] = e.target.value;
-    setGuessWord([...guessWord]);
   };
 
   const toGuessWord = () => {
     const newWord = guessWord.join("");
-    if(word === "") {
+    if (word === "") {
       setErrorMessage("Please enter a word");
       return;
-    } else if(newWord.length !== word.length) {
+    } else if (newWord.length !== word.length) {
       setErrorMessage("Please enter a word with the same length");
       return;
-    } else if(newWord.toLowerCase() === word.toLowerCase()) {
+    } else if (newWord.toLowerCase() === word.toLowerCase()) {
       setGuessWord([]);
       setErrorMessage("You guessed the word!");
       return;
     } else {
+      setWordsHistory([...wordsHistory, newWord]);
       setGuessWord([]);
+      clearInputs();
       setErrorMessage("Try again");
     }
   };
+
+  const clearInputs = () => {
+    inputsRefs.current.forEach((input) => {
+      input.value = "";
+      input.blur();
+    });
+  }
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       toGuessWord();
     }
-  })
+  });
 
   console.log(guessWord.length);
 
   return (
     <div className="words-game">
       <div className="words-game__container">
-        <div className="message">
-            {errorMessage}
-        </div>
+        <div className="message">{errorMessage}</div>
         <div className="word">
           {word.split("").map((letter, index) => (
             <div key={index} className="word-letter">
@@ -74,6 +75,7 @@ export const Words = () => {
         <div className="word-input">
           {Array.from({ length: word.length }).map((_, index) => (
             <input
+              ref={(el) => (inputsRefs.current[index] = el as HTMLInputElement)}
               onChange={(e) => autoFocusChange(e, index)}
               key={index}
               className="word-input-letter"
@@ -98,6 +100,13 @@ export const Words = () => {
                   ))}
                 </div>
               )}
+            </div>
+          ))}
+          {Array.from({ length: 5 - wordsHistory.length }).map((_, index) => (
+            <div key={index} className="words-history__empty-words">
+              {Array.from({ length: word.length }).map((_, index) => (
+                <div key={index} className="word-history-letter"></div>
+              ))}
             </div>
           ))}
         </div>
